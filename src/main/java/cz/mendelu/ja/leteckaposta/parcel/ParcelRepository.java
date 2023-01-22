@@ -7,7 +7,4 @@ import java.util.UUID;
 
 @Repository
 interface ParcelRepository extends CrudRepository<Parcel, UUID> {
-
-
-
 }

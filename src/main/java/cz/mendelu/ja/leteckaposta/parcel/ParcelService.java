@@ -27,10 +27,20 @@ public class ParcelService {
         this.parcelRouter = parcelRouter;
     }
 
+    /**
+     * Calculates the route through which the parcel will travel.
+     * @param location country where the parcel currently is
+     * @param destination country where the parcel wants to be
+     * @return order of countries in which the parcel is going to travel
+     */
     public ArrayList<String> getParcelRoute(String location, String destination) {
         return parcelRouter.route(location, destination);
     }
 
+    /**
+     * Calculates the path through which all parcels that are currently in the database will travel.
+     * @return list of routes = the order of countries through which each package will travel
+     */
     public List<ArrayList<String>> getAllRoutes() {
         var parcels = this.getAll();
         return parcels
@@ -42,10 +52,10 @@ public class ParcelService {
     /**
      * Register new customer order as {@link Parcel} in the system.
      *
-     * @param location    todo
-     * @param destination todo
-     * @param weight      todo
-     * @return todo
+     * @param location where the parcel is
+     * @param destination where the parcel wants to go
+     * @param weight of the parcel in kg
+     * @return created parcel
      */
     @Transactional
     Parcel createParcel(
@@ -60,7 +70,13 @@ public class ParcelService {
         return parcelRepository.save(parcel); // create - protoze tam neni id, kdyby tam bylo id, je to update
     }
 
-
+    /**
+     * Inserts into the database the list of parcels that are provided in a csv file.
+     * @param csvFile with location, destination and weight of parcels
+     * @param jdbcURL database url
+     * @param dbUser database username
+     * @param dbPassword database password
+     */
     public void importParcelsCSV(String csvFile, String jdbcURL, String dbUser, String dbPassword) {
         try (Connection conn = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
              PreparedStatement pstmt = conn.prepareStatement("INSERT INTO parcels(id, created, destination, last_modified, location, weight) VALUES (?,?,?,?,?,?)")) {
@@ -83,6 +99,10 @@ public class ParcelService {
         }
     }
 
+    /**
+     * Returns all parcels from database.
+     * @return list of parcels
+     */
     public List<Parcel> getAll() {
         return (List<Parcel>) parcelRepository.findAll();
     }
