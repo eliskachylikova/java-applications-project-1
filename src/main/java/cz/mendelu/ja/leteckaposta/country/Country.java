@@ -9,7 +9,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "countries")
-class Country {
+public class Country {
 
     @Id
     @Column(length = 3)

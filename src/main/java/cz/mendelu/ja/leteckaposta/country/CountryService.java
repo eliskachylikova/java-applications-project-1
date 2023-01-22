@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class CountryService {
+public class CountryService {
 
     private final JdbcTemplate jdbcTemplate;
     private final CountryRepository countryRepository;
@@ -114,6 +112,26 @@ class CountryService {
                     ps.setString(2, neighbour.neighbour_cca3);
                 }
         );
+    }
+
+    public HashMap<String, ArrayList<String>> getCountryMap() {
+        List<Country> countries = (List<Country>) countryRepository.findAll();
+        List<String> countryNames = countries
+                .stream()
+                .map(Country::getCca3)
+                .toList();
+        HashMap<String, ArrayList<String>> countryMap = new HashMap<>();
+
+        for (String country : countryNames) {
+            List<Country> borderCountries = (List<Country>) countryRepository.getCountriesByBorders(country);
+            List<String> borderCountryNames = borderCountries
+                    .stream()
+                    .map(Country::getCca3)
+                    .toList();
+            countryMap.put(country, new ArrayList<>(borderCountryNames));
+        }
+
+        return countryMap;
     }
 
 }

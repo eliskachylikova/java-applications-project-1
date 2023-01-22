@@ -11,7 +11,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Array;
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -41,6 +43,12 @@ class ParcelRestController {
         log.info("Principal: {}", principal);
         var parcel = parcelService.createParcel(request.location, request.destination, request.weight);
         return Response.of(parcel);
+    }
+
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    ArrayList<String> getRoute(@RequestParam("destination") String destination, @RequestParam("location") String location) {
+        return parcelService.getParcelRoute(location, destination);
     }
 
 }

@@ -1,19 +1,31 @@
 package cz.mendelu.ja.leteckaposta.parcel;
 
-import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class ParcelService {
 
     private final ParcelRepository parcelRepository;
+    private final ParcelRouter parcelRouter;
 
-    // servicam psat dokumentaci
-    // nepouzivat slova ktera jsou v nazvu te metody a napsat k cemu to je, ne co to dela a jak
+    @Autowired
+    public ParcelService(ParcelRepository parcelRepository, ParcelRouter parcelRouter) {
+        this.parcelRepository = parcelRepository;
+        this.parcelRouter = parcelRouter;
+    }
+
+    public ArrayList<String> getParcelRoute(String location, String destination) {
+        ArrayList<String> route = parcelRouter.route(location, destination);
+        System.out.println(route);
+        return route;
+    }
+
     /**
      * Register new customer order as {@link Parcel} in the system.
      *
@@ -34,5 +46,7 @@ public class ParcelService {
         parcel.setWeight(weight);
         return parcelRepository.save(parcel); // create - protoze tam neni id, kdyby tam bylo id, je to update
     }
+
+
 
 }
