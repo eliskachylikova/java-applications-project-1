@@ -106,7 +106,7 @@ public class CountryService {
         jdbcTemplate.batchUpdate(
                 "insert into boarders (country_cca3, neighbour_cca3) values (?, ?)",
                 countries.stream().flatMap(ForignCountry::getNeighbours).toList(),
-                100,
+                10000,
                 (ps, neighbour) -> {
                     ps.setString(1, neighbour.country_cca3);
                     ps.setString(2, neighbour.neighbour_cca3);

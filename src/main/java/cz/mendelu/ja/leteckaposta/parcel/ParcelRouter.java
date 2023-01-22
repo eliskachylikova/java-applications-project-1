@@ -51,6 +51,9 @@ public class ParcelRouter {
                 break;
             }
 
+            System.out.println("BORDERS OF CURRENT");
+            System.out.println(countryBorders.get(current));
+
             for (String next : countryBorders.get(current)) {
                 if (!cameFrom.containsKey(next)) {
                     cameFrom.put(next, current);
