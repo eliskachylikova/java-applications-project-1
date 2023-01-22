@@ -6,6 +6,10 @@ spring:
       ddl-auto: validate
 
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 restcountries.url: https://restcountries.com/v3.1/region/
 
 environments:
