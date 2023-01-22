@@ -1,6 +1,7 @@
 package cz.mendelu.ja.leteckaposta.country;
 
 import cz.mendelu.ja.leteckaposta.utils.Response;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/country")
 @RequiredArgsConstructor
+@Api(tags = "Country")
 class CountryRestController {
 
     private final CountryRepository countryRepository;

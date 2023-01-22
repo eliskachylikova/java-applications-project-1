@@ -1,6 +1,7 @@
 package cz.mendelu.ja.leteckaposta.parcel;
 
 import cz.mendelu.ja.leteckaposta.utils.Response;
+import io.swagger.annotations.Api;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,17 +12,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.lang.reflect.Array;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping(path = "/api/parcel")
 @RequiredArgsConstructor
+@Api(tags = "Parcel")
 class ParcelRestController {
 
-    private final ParcelRepository parcelRepository;
     private final ParcelService parcelService;
 
     @Data
@@ -45,10 +46,22 @@ class ParcelRestController {
         return Response.of(parcel);
     }
 
-    @GetMapping("/")
+    @GetMapping("/custom_route")
     @ResponseStatus(HttpStatus.OK)
     ArrayList<String> getRoute(@RequestParam("destination") String destination, @RequestParam("location") String location) {
         return parcelService.getParcelRoute(location, destination);
+    }
+
+    @GetMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    List<Parcel> getAll() {
+        return parcelService.getAll();
+    }
+
+    @GetMapping("/route")
+    @ResponseStatus(HttpStatus.OK)
+    List<ArrayList<String>> getAllRoutes() {
+        return parcelService.getAllRoutes();
     }
 
 }
