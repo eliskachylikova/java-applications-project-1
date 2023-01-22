@@ -1,0 +1,16 @@
+### POST create parcel
+POST {{baseUrl}}/parcel/
+Content-Type: application/json
+
+{
+  "location": "Prague",
+  "destination": "Prague",
+  "weight": "Prague"
+
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+});
+%}

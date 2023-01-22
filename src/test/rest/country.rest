@@ -1,0 +1,49 @@
+### GET country by cca3
+GET {{baseUrl}}/country/CZE
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GET country with not exists cca3
+GET {{baseUrl}}/country/XXXX
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+});
+%}
+
+### GET country with not not valid cca3 code
+GET {{baseUrl}}/country/XXXX
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 404, "Response status is not 404");
+});
+%}
+
+### GET country neibers
+GET {{baseUrl}}/country/CZE/neighbour
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### GET all country
+GET {{baseUrl}}/country
+Accept: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}

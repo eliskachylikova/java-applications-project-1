@@ -1,0 +1,2 @@
+### Test coutnry of region europe
+GET https://restcountries.com/v3.1/region/europe

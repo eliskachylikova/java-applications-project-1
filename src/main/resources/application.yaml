@@ -1,0 +1,38 @@
+spring:
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+
+restcountries.url: https://restcountries.com/v3.1/region/
+
+environments:
+  dev:
+    url: http://dev.example.com
+    name: Developer Setup
+  prod:
+    url: http://another.example.com
+    name: My Cool App
+
+management:
+  endpoint:
+    flyway.enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - info
+          - health
+  info:
+    git:
+      enabled: false
+    env:
+      enabled: true
+
+info.app:
+  version: 1.1.0
+  encoding: ${project.build.sourceEncoding}
+  java.source: ${java.version}
+  java.target: ${java.version}
